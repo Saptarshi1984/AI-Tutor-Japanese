@@ -72,8 +72,8 @@ export async function getMatchedData(embedding: number[]) {
   try {
     const { data } = await supabase.rpc("match_documents", {
       query_embedding: embedding,
-      match_threshold: 0.80,
-      match_count: 4,
+      match_threshold: 0.78,
+      match_count: 2,
     });
     console.log("Matched data found");
     return data;

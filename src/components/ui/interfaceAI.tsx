@@ -2,6 +2,7 @@
 import { Heading, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import Faq from "../Faq";
 
 const InterfaceAI = () => {
   const [message, setMessage] = useState("");
@@ -56,10 +57,11 @@ const InterfaceAI = () => {
           <Heading size="sm" color="gray">
             Language Program Consultant
           </Heading>
-          <div className="w-80 h-80 max-h-80 !p-2 hyphens-auto  !text-sm !font-serif text-gray-400  !border-2 rounded-md !border-gray-700 overflow-y-scroll scrollbar-slick">
+          <div className="relative w-80 h-80 max-h-80 !p-2 hyphens-auto  !text-sm !font-serif text-gray-400  !border-2 rounded-md !border-gray-700 overflow-y-scroll scrollbar-slick">
             <ReactMarkdown>
               {message == "" ? AIdesc : message}
             </ReactMarkdown>
+            <Faq />
           </div>
         </div>
       </div>
@@ -67,13 +69,13 @@ const InterfaceAI = () => {
       <form className="flex flex-col gap-4">
         <textarea          
           className="!w-xs  !border-1 !p-2 !text-gray-400  !border-cyan-300 !text-sm rounded-md"
-          placeholder="Eg. I want to learn Japanese greetings."
+          placeholder="Eg. How can I learn japanese fast?"
           value={userInput}
           required
           onChange={(e) => setUserInput(e.target.value)}
         />
-        <Button  fontSize='xl' loading={loading} variant="solid" colorPalette='teal' onClick={askAI}>
-          START
+        <Button fontSize='lg' loading={loading} variant="solid" colorPalette='teal' onClick={askAI}>
+          ASK
         </Button>
       </form>
     </div>
