@@ -4,10 +4,12 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Faq from "../Faq";
 
+
 const InterfaceAI = () => {
   const [message, setMessage] = useState("");
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
+  
   
   const AIdesc= `Hello! I'm your language counselor here to help you assess your goals. 
                  Based on your needs, I'll recommend the most effective approach to 
@@ -17,6 +19,9 @@ const InterfaceAI = () => {
   const getResponse = async (input: string) => {
     
     try {
+      setMessage("Thinking...");
+      
+      setLoading(true);
       const res = await fetch("/api", {
         method: "POST",
         headers: {
@@ -26,8 +31,9 @@ const InterfaceAI = () => {
       });
 
       const { message } = await res.json();
-      setMessage(message);
+      setMessage(message);      
       setLoading(false);
+      setUserInput("");
 
     } catch (error) {
       console.log("An error occured in AI response!");
@@ -35,13 +41,6 @@ const InterfaceAI = () => {
     }
   };
 
-  const askAI = async () => {
-    
-    setMessage("Thinking...");
-    setLoading(true);
-    await getResponse(userInput);
-    setUserInput("");
-  };
 
   return (
     <div className="w-[400px] h-[900px] flex flex-col justify-evenly gap-8 items-center !m-auto">
@@ -57,12 +56,18 @@ const InterfaceAI = () => {
           <Heading size="sm" color="gray">
             Language Program Consultant
           </Heading>
-          <div className="relative w-80 h-80 max-h-80 !p-2 hyphens-auto  !text-sm !font-serif text-gray-400  !border-2 rounded-md !border-gray-700 overflow-y-scroll scrollbar-slick">
-            <ReactMarkdown>
-              {message == "" ? AIdesc : message}
-            </ReactMarkdown>
-            <Faq />
-          </div>
+          <div className="relative w-80 h-90 max-h-100 !p-2 hyphens-auto  !text-sm !font-serif text-gray-400  !border-2 rounded-md !border-gray-700 overflow-y-scroll scrollbar-slick">
+            
+              {message === "" && (
+              <>
+               <ReactMarkdown>{AIdesc}</ReactMarkdown>
+               <Faq func={getResponse} />
+              </>
+              )}         
+             
+             {message != "" && <ReactMarkdown>{message}</ReactMarkdown>  }
+                    
+          </div>          
         </div>
       </div>
 
@@ -74,10 +79,11 @@ const InterfaceAI = () => {
           required
           onChange={(e) => setUserInput(e.target.value)}
         />
-        <Button fontSize='lg' loading={loading} variant="solid" colorPalette='teal' onClick={askAI}>
+        <Button fontSize='lg' loading={loading} variant="solid" colorPalette='teal' onClick={() => getResponse(userInput)}>
           ASK
         </Button>
       </form>
+      
     </div>
   );
 };
