@@ -2,7 +2,7 @@
 import { Heading, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import Faq from "../Faq";
+import Faq from "./Faq";
 
 
 const InterfaceAI = () => {

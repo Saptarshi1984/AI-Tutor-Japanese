@@ -1,11 +1,17 @@
-import InterfaceAI from "@/components/ui/interfaceAI";
+
+import { useState } from "react";
+import InterfaceAI from "@/components/interfaceAI";
+import HomePage from "@/components/HomePage";
+
+
 
 
 export default function Home() {
+  
 
   return (
-    <main className="w-[412px] h-[915px] !m-auto !border-1 !border-gray-600 bg-gray-950">     
-     <InterfaceAI/>
+    <main className="w-[412px] h-[915px] "> 
+      <HomePage />      
     </main>
   );
 }
