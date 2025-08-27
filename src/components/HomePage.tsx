@@ -10,7 +10,7 @@ const HomePage = () => {
     const route =  useRouter()
   return (
     <div className='w-[90%] h-full flex flex-col items-center justify-evenly !m-auto gap-4'>
-        <Heading size={'2xl'}>LinguaSpark</Heading>
+        <Heading size={'2xl'}>totemoJapan</Heading>
         <Heading size={'3xl'} textAlign={'center'}>Unlock the World of Japanese Through Interactive AI Lessons</Heading>
         <Image
         className='rounded-xl'

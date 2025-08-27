@@ -15,7 +15,7 @@ const BottomMenu = () => {
   const r = useRouter();
   const pathname = usePathname();
   return (
-    <div className='absolute bottom-0 w-full min-h-20 flex flex-row !text-3xl !border-t-1 !border-t-gray-500 items-center justify-evenly bg-[#1a3232]'>
+    <div className='absolute bottom-0 left-0 w-full min-h-10 flex flex-row !text-xl !border-t-1 !border-t-gray-500 items-center justify-evenly bg-[#1a3232]'>
       <Link
       className={pathname === '/Dashboard' ? '!text-cyan-500': ''}
       onClick={() => (r.push('/Dashboard'))}><GoHome /></Link>      
@@ -24,9 +24,9 @@ const BottomMenu = () => {
       onClick={() => (r.push('/Lessons'))}
       ><PiBooksLight /></Link>
       <Link
-      className={pathname === '/Settings' ? '!text-cyan-500': ''}
-      onClick={() => (r.push('/Settings'))}
-      ><IoSettingsOutline /></Link>
+      className={pathname === '/AI' ? '!text-cyan-500': ''}
+      onClick={() => (r.push('/AI'))}
+      >AI</Link>
       <Link
       className={pathname === '/Profile' ? '!text-cyan-500': ''}
       onClick={() => (r.push('/Profile'))}
