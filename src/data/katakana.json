@@ -1,0 +1,58 @@
+[
+  { "character": "ア", "romaji": "a", "url": "/audio/katakana/a.mp3" },
+  { "character": "イ", "romaji": "i", "url": "/audio/katakana/i.mp3" },
+  { "character": "ウ", "romaji": "u", "url": "/audio/katakana/u.mp3" },
+  { "character": "エ", "romaji": "e", "url": "/audio/katakana/e.mp3" },
+  { "character": "オ", "romaji": "o", "url": "/audio/katakana/o.mp3" },
+
+  { "character": "カ", "romaji": "ka", "url": "/audio/katakana/ka.mp3" },
+  { "character": "キ", "romaji": "ki", "url": "/audio/katakana/ki.mp3" },
+  { "character": "ク", "romaji": "ku", "url": "/audio/katakana/ku.mp3" },
+  { "character": "ケ", "romaji": "ke", "url": "/audio/katakana/ke.mp3" },
+  { "character": "コ", "romaji": "ko", "url": "/audio/katakana/ko.mp3" },
+
+  { "character": "サ", "romaji": "sa", "url": "/audio/katakana/sa.mp3" },
+  { "character": "シ", "romaji": "shi", "url": "/audio/katakana/shi.mp3" },
+  { "character": "ス", "romaji": "su", "url": "/audio/katakana/su.mp3" },
+  { "character": "セ", "romaji": "se", "url": "/audio/katakana/se.mp3" },
+  { "character": "ソ", "romaji": "so", "url": "/audio/katakana/so.mp3" },
+
+  { "character": "タ", "romaji": "ta", "url": "/audio/katakana/ta.mp3" },
+  { "character": "チ", "romaji": "chi", "url": "/audio/katakana/chi.mp3" },
+  { "character": "ツ", "romaji": "tsu", "url": "/audio/katakana/tsu.mp3" },
+  { "character": "テ", "romaji": "te", "url": "/audio/katakana/te.mp3" },
+  { "character": "ト", "romaji": "to", "url": "/audio/katakana/to.mp3" },
+
+  { "character": "ナ", "romaji": "na", "url": "/audio/katakana/na.mp3" },
+  { "character": "ニ", "romaji": "ni", "url": "/audio/katakana/ni.mp3" },
+  { "character": "ヌ", "romaji": "nu", "url": "/audio/katakana/nu.mp3" },
+  { "character": "ネ", "romaji": "ne", "url": "/audio/katakana/ne.mp3" },
+  { "character": "ノ", "romaji": "no", "url": "/audio/katakana/no.mp3" },
+
+  { "character": "ハ", "romaji": "ha", "url": "/audio/katakana/ha.mp3" },
+  { "character": "ヒ", "romaji": "hi", "url": "/audio/katakana/hi.mp3" },
+  { "character": "フ", "romaji": "fu", "url": "/audio/katakana/fu.mp3" },
+  { "character": "ヘ", "romaji": "he", "url": "/audio/katakana/he.mp3" },
+  { "character": "ホ", "romaji": "ho", "url": "/audio/katakana/ho.mp3" },
+
+  { "character": "マ", "romaji": "ma", "url": "/audio/katakana/ma.mp3" },
+  { "character": "ミ", "romaji": "mi", "url": "/audio/katakana/mi.mp3" },
+  { "character": "ム", "romaji": "mu", "url": "/audio/katakana/mu.mp3" },
+  { "character": "メ", "romaji": "me", "url": "/audio/katakana/me.mp3" },
+  { "character": "モ", "romaji": "mo", "url": "/audio/katakana/mo.mp3" },
+
+  { "character": "ヤ", "romaji": "ya", "url": "/audio/katakana/ya.mp3" },
+  { "character": "ユ", "romaji": "yu", "url": "/audio/katakana/yu.mp3" },
+  { "character": "ヨ", "romaji": "yo", "url": "/audio/katakana/yo.mp3" },
+
+  { "character": "ラ", "romaji": "ra", "url": "/audio/katakana/ra.mp3" },
+  { "character": "リ", "romaji": "ri", "url": "/audio/katakana/ri.mp3" },
+  { "character": "ル", "romaji": "ru", "url": "/audio/katakana/ru.mp3" },
+  { "character": "レ", "romaji": "re", "url": "/audio/katakana/re.mp3" },
+  { "character": "ロ", "romaji": "ro", "url": "/audio/katakana/ro.mp3" },
+
+  { "character": "ワ", "romaji": "wa", "url": "/audio/katakana/wa.mp3" },
+  { "character": "ヲ", "romaji": "wo", "url": "/audio/katakana/wo.mp3" },
+
+  { "character": "ン", "romaji": "n", "url": "/audio/katakana/n.mp3" }
+]

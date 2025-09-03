@@ -1,0 +1,58 @@
+[
+  { "character": "あ", "romaji": "a", "url": "/audio/hiragana/a.mp3" },
+  { "character": "い", "romaji": "i", "url": "/audio/hiragana/i.mp3" },
+  { "character": "う", "romaji": "u", "url": "/audio/hiragana/u.mp3" },
+  { "character": "え", "romaji": "e", "url": "/audio/hiragana/e.mp3" },
+  { "character": "お", "romaji": "o", "url": "/audio/hiragana/o.mp3" },
+
+  { "character": "か", "romaji": "ka", "url": "/audio/hiragana/ka.mp3" },
+  { "character": "き", "romaji": "ki", "url": "/audio/hiragana/ki.mp3" },
+  { "character": "く", "romaji": "ku", "url": "/audio/hiragana/ku.mp3" },
+  { "character": "け", "romaji": "ke", "url": "/audio/hiragana/ke.mp3" },
+  { "character": "こ", "romaji": "ko", "url": "/audio/hiragana/ko.mp3" },
+
+  { "character": "さ", "romaji": "sa", "url": "/audio/hiragana/sa.mp3" },
+  { "character": "し", "romaji": "shi", "url": "/audio/hiragana/shi.mp3" },
+  { "character": "す", "romaji": "su", "url": "/audio/hiragana/su.mp3" },
+  { "character": "せ", "romaji": "se", "url": "/audio/hiragana/se.mp3" },
+  { "character": "そ", "romaji": "so", "url": "/audio/hiragana/so.mp3" },
+
+  { "character": "た", "romaji": "ta", "url": "/audio/hiragana/ta.mp3" },
+  { "character": "ち", "romaji": "chi", "url": "/audio/hiragana/chi.mp3" },
+  { "character": "つ", "romaji": "tsu", "url": "/audio/hiragana/tsu.mp3" },
+  { "character": "て", "romaji": "te", "url": "/audio/hiragana/te.mp3" },
+  { "character": "と", "romaji": "to", "url": "/audio/hiragana/to.mp3" },
+
+  { "character": "な", "romaji": "na", "url": "/audio/hiragana/na.mp3" },
+  { "character": "に", "romaji": "ni", "url": "/audio/hiragana/ni.mp3" },
+  { "character": "ぬ", "romaji": "nu", "url": "/audio/hiragana/nu.mp3" },
+  { "character": "ね", "romaji": "ne", "url": "/audio/hiragana/ne.mp3" },
+  { "character": "の", "romaji": "no", "url": "/audio/hiragana/no.mp3" },
+
+  { "character": "は", "romaji": "ha", "url": "/audio/hiragana/ha.mp3" },
+  { "character": "ひ", "romaji": "hi", "url": "/audio/hiragana/hi.mp3" },
+  { "character": "ふ", "romaji": "fu", "url": "/audio/hiragana/fu.mp3" },
+  { "character": "へ", "romaji": "he", "url": "/audio/hiragana/he.mp3" },
+  { "character": "ほ", "romaji": "ho", "url": "/audio/hiragana/ho.mp3" },
+
+  { "character": "ま", "romaji": "ma", "url": "/audio/hiragana/ma.mp3" },
+  { "character": "み", "romaji": "mi", "url": "/audio/hiragana/mi.mp3" },
+  { "character": "む", "romaji": "mu", "url": "/audio/hiragana/mu.mp3" },
+  { "character": "め", "romaji": "me", "url": "/audio/hiragana/me.mp3" },
+  { "character": "も", "romaji": "mo", "url": "/audio/hiragana/mo.mp3" },
+
+  { "character": "や", "romaji": "ya", "url": "/audio/hiragana/ya.mp3" },
+  { "character": "ゆ", "romaji": "yu", "url": "/audio/hiragana/yu.mp3" },
+  { "character": "よ", "romaji": "yo", "url": "/audio/hiragana/yo.mp3" },
+
+  { "character": "ら", "romaji": "ra", "url": "/audio/hiragana/ra.mp3" },
+  { "character": "り", "romaji": "ri", "url": "/audio/hiragana/ri.mp3" },
+  { "character": "る", "romaji": "ru", "url": "/audio/hiragana/ru.mp3" },
+  { "character": "れ", "romaji": "re", "url": "/audio/hiragana/re.mp3" },
+  { "character": "ろ", "romaji": "ro", "url": "/audio/hiragana/ro.mp3" },
+
+  { "character": "わ", "romaji": "wa", "url": "/audio/hiragana/wa.mp3" },
+  { "character": "を", "romaji": "wo", "url": "/audio/hiragana/wo.mp3" },
+
+  { "character": "ん", "romaji": "n", "url": "/audio/hiragana/n.mp3" }
+]

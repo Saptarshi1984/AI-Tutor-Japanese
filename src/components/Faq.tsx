@@ -50,9 +50,9 @@ const Faq:React.FC<FaqProps> = ({func})=> {
       onClick={() => setShowFaq(prev => !prev)}
       type="button"
       >
-        {!showFaq && <span><FaAnglesUp /></span> }       
+        {!showFaq && <span className="animate-pulse "><FaAnglesUp /></span> }       
         FAQ
-        {showFaq && <span><FaAnglesDown /></span>}
+        {showFaq && <span className="animate-pulse"><FaAnglesDown /></span>}
       </button>
     </>
   );

@@ -4,12 +4,12 @@
 import { Heading } from '@chakra-ui/react'
 import LessonCard from '@/components/LessonCard'
 import React from 'react'
+import { useLoading } from '../providers/LoadingProvider'
 
-
-const page = () => {
+const page = () => {   
 
   return (
-    <div className='w-full  !mt-12  '>
+    <div className='w-full  !mt-12'>
         <Heading className='w-96 !ml-6 !mb-2'>Qucik Access</Heading>
         <div className='max-w-screen max-h-196 flex flex-col gap-6 scrollbar-slick overflow-y-scroll scroll-smooth'>
 

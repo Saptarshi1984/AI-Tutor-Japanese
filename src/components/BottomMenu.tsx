@@ -1,36 +1,45 @@
 'use client'
 
-import React from 'react'
-import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { Link } from '@chakra-ui/react';
 import { GoHome } from "react-icons/go";
 import { IoPersonOutline } from "react-icons/io5";
 import { PiBooksLight } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
+import { useHandleRedirect } from '@/utils/helpers';
 
 
 const BottomMenu = () => {
 
-  const r = useRouter();
+
   const pathname = usePathname();
+  
+  const {handleClickToRedirect} = useHandleRedirect();
+
+
   return (
-    <div className='absolute bottom-0 left-0 w-full min-h-10 flex flex-row !text-xl !border-t-1 !border-t-gray-500 items-center justify-evenly bg-[#1a3232]'>
+    <div className='absolute bottom-0 left-0 w-full min-h-10 flex flex-row !text-xl !border-t-1 !border-t-gray-500 items-center justify-evenly bg-gray-900'>
       <Link
       className={pathname === '/Dashboard' ? '!text-cyan-500': ''}
-      onClick={() => (r.push('/Dashboard'))}><GoHome /></Link>      
+      onClick={() => handleClickToRedirect('/Dashboard')}><span className='flex flex-col items-center gap-0.5'><GoHome /><span className='!text-[10px]'>Home</span></span></Link>      
       <Link
       className={pathname === '/Lessons' ? '!text-cyan-500': ''}
-      onClick={() => (r.push('/Lessons'))}
-      ><PiBooksLight /></Link>
+      onClick={() => handleClickToRedirect('/Lessons')}
+      > 
+        <span className='flex flex-col items-center gap-0.5'>
+         <PiBooksLight />
+        <span className='!text-[10px]'>Lessons</span>
+        </span>
+        
+        </Link>
       <Link
       className={pathname === '/AI' ? '!text-cyan-500': ''}
-      onClick={() => (r.push('/AI'))}
-      >AI</Link>
+      onClick={() => handleClickToRedirect('/AI')}
+      ><span className='w-[30px] h-[30px] flex flex-col items-center justify-center bg-cyan-800 !p-3 rounded-full '>AI</span></Link>
       <Link
       className={pathname === '/Profile' ? '!text-cyan-500': ''}
-      onClick={() => (r.push('/Profile'))}
-      ><IoPersonOutline /></Link>
+      onClick={() => handleClickToRedirect('/Profile')}
+      >
+        <span className='flex flex-col items-center gap-0.5'><IoPersonOutline /><span className='!text-[10px]'>Profile</span></span></Link>
     </div>
   )
 }

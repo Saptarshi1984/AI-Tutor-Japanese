@@ -4,6 +4,8 @@ import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import Logo from "@/components/Logo";
 import BottomMenu from "@/components/BottomMenu";
+import { LoadingProvider } from "@/app/providers/LoadingProvider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,12 +33,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
       <div className="relative w-[412px] h-[915px] !m-auto !border-1 !border-gray-600 bg-gray-950">
-           
+          
       <Provider>
+        <LoadingProvider> 
         <Logo />         
         {children}
-        <BottomMenu />
+        <BottomMenu /> 
+        </LoadingProvider>         
       </Provider>
+           
       </div>              
       </body>
     </html>

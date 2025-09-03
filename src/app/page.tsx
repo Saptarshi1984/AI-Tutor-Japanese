@@ -10,8 +10,9 @@ export default function Home() {
   
 
   return (
-    <main className="w-[412px] h-[915px] "> 
-      <HomePage />      
+    <main className="relative w-[412px] h-[915px]"> 
+      <HomePage />
+            
     </main>
   );
 }

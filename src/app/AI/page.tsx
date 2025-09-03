@@ -45,7 +45,7 @@ const page = () => {
   return (
     <div className="w-[400px] h-[900px] flex flex-col justify-evenly gap-8 items-center !m-auto">
       <Heading className="max-w-80 max-h-10 !text-4xl text-center">
-        totemoJapan
+       <span className="text-red-700">totemo</span>Japan
       </Heading>      
 
       <div className="w-[80px] flex flex-col justify-between items-center gap-4">
