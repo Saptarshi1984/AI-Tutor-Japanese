@@ -3,45 +3,49 @@
 
 import { Heading } from '@chakra-ui/react'
 import LessonCard from '@/components/LessonCard'
-import React from 'react'
+import {useState} from 'react'
 import { useLoading } from '../providers/LoadingProvider'
 
-const page = () => {   
+const page = () => {  
+  const [loading, setloading] = useState(false); 
 
   return (
     <div className='w-full  !mt-12'>
         <Heading className='w-96 !ml-6 !mb-2'>Qucik Access</Heading>
-        <div className='max-w-screen max-h-196 flex flex-col gap-6 scrollbar-slick overflow-y-scroll scroll-smooth'>
+        <div className='flex flex-col gap-6'>
 
         <LessonCard
-        imgSrc='/selfAssessment.png' 
+         
         header='Take an Assessment Test'
         text='Assess your current Japanese Proficiency'
         btnText='Start'
+        loading={loading}
         />
 
         
         <LessonCard
-        imgSrc='/aichat.png' 
+        
         header='Chat with the AI Agent'
         text='Ask AI agent for clear roadmap to learn Japanese.'
         btnText='Start'
+        loading={loading}
         />
 
        <LessonCard
-        imgSrc='/buildvocabulary.png' 
+        
         header='Build Vocabulary'
         text='Build solid vocabulary with common words.'
         btnText='Start'
+        loading={loading}
         />
        
        <LessonCard
-        imgSrc='/japanesecharacter.png' 
+        
         header='Learn Japanese Character'
         text='Learn Japanese character the fun way.'
         btnText='Start'
-        />
-       
+        loading={loading}
+        />       
                 
         </div>
          

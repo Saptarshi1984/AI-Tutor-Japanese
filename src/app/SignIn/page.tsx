@@ -10,8 +10,8 @@ const page = () => {
 
   return (
 
-    <div className='w-[90%] h-full flex flex-col items-center !m-auto gap-8 !mt-12'>
-            <Heading size={'2xl'}>LinguaSpark</Heading>
+    <div className='w-[90%] h-full flex flex-col items-center !m-auto gap-8 !mt-16'>
+            
             <form className='w-full flex flex-col gap-20'>
             <div className='w-full flex flex-col gap-4'>
             <Input
