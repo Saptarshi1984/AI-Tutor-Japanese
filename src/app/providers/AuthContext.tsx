@@ -1,3 +1,4 @@
+'use client'
 import {
   createContext,
   useState,
@@ -8,11 +9,17 @@ import {
 import { supabase } from "../config";
 import type { Session } from "@supabase/supabase-js";
 
-type SessionType = any | null;
+type SessionType = Session | null;
+
+interface AuthResult {
+  success: boolean;
+  data?: any; // You can replace `any` with `AuthResponse` from Supabase types
+  error?: string;
+}
 
 interface AuthContextType {
-  session: SessionType;
-  /* setSession: React.Dispatch<React.SetStateAction<SessionType>>; */
+  session: SessionType;  
+  signInUser: (email:string, password:string) => Promise<AuthResult>;
 }
 
 interface AuthProviderProps {
@@ -20,9 +27,9 @@ interface AuthProviderProps {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const AuthContextProvider = ({ children }: AuthProviderProps) => {
+export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   //Session state (user info, sign-in status)
-  const [session, setSession] = useState<SessionType | null>(null);
+  const [session, setSession] = useState<SessionType>(null);
 
   useEffect(() => {
     async function getInitialSession() {
@@ -47,12 +54,36 @@ const AuthContextProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   //Auth functions (signin, signup, logout)
+  const signInUser = async (email:string, password:string): Promise<AuthResult> => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase(),
+        password: password,
+      });
+      if (error) {
+        console.error("Supabase sign-in error:", error.message);
+        return { success: false, error: error.message };
+      }
+      //success
+      console.log('Supabase sign-in success:', data);
+      return {success:true, data};
+    } catch (error) {
+      //Unexpected error
+      console.error('Unexpected error during sign-in:', error);
+      return { success: false, error: 'An unexpected error occurred. Please try again.' };
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, signInUser }}>{children}</AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw new Error("useAuth must be used within an AuthContextProvider");
+  }
+  return ctx;
 };
+
