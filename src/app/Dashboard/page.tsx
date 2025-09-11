@@ -1,58 +1,53 @@
-'use client'
+"use client";
 
+import { Heading } from "@chakra-ui/react";
+import LessonCard from "@/components/LessonCard";
+import { useAuth } from "../providers/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-import { Heading } from '@chakra-ui/react'
-import LessonCard from '@/components/LessonCard'
-import {useState} from 'react'
-import { useLoading } from '../providers/LoadingProvider'
+const page = () => {
+  const { session, loading } = useAuth();
+  const router = useRouter();
 
+  // Redirect to SignIn if no session
+  useEffect(() => {
+    if (!loading && !session) {
+      router.push("/SignIn");
+    }
+  }, [session, loading, router]);
 
-const page = () => {  
-  const [loading, setloading] = useState(false); 
-  
+  if (loading) return <p>Loading...</p>;
+  if (!session) return null; // hide content until redirect
 
   return (
-    <div className='w-full  !mt-12'>
-        <Heading className='w-96 !ml-6 !mb-2'>Qucik Access</Heading>
-        <div className='flex flex-col gap-6'>
-
+    <div className="w-full !mt-12">
+      <Heading className="w-96 !ml-6 !mb-2">Quick Access</Heading>
+      <div className="flex flex-col gap-6">
         <LessonCard
-        url={'/JapLevelTest'}
-        header='Take an Assessment Test'
-        text='Assess your current Japanese Proficiency'
-        btnText='Start'
-        
+          url={"/JapLevelTest"}
+          header="Take an Assessment Test"
+          text="Assess your current Japanese Proficiency"
+          btnText="Start"
         />
-
-        
         <LessonCard
-        
-        header='Chat with the AI Agent'
-        text='Ask AI agent for clear roadmap to learn Japanese.'
-        btnText='Start'
-        
+          header="Chat with the AI Agent"
+          text="Ask AI agent for clear roadmap to learn Japanese."
+          btnText="Start"
         />
-
-       <LessonCard
-        
-        header='Build Vocabulary'
-        text='Build solid vocabulary with common words.'
-        btnText='Start'
-        
+        <LessonCard
+          header="Build Vocabulary"
+          text="Build solid vocabulary with common words."
+          btnText="Start"
         />
-       
-       <LessonCard
-        
-        header='Learn Japanese Character'
-        text='Learn Japanese character the fun way.'
-        btnText='Start'
-        
-        />       
-                
-        </div>
-         
+        <LessonCard
+          header="Learn Japanese Character"
+          text="Learn Japanese character the fun way."
+          btnText="Start"
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

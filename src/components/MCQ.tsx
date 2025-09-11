@@ -76,7 +76,7 @@ function MCQ({ data }: McqProps) {
         Submit
       </Button>
 
-      {score !== null && (
+      {score  && (
         <Text mt={4} fontSize="lg" color="white">
           Your Score: {score} / {data.length}
         </Text>

@@ -10,16 +10,14 @@ import { useAuth } from "@/app/providers/AuthContext";
 
 const BottomMenu = () => {
   
-  const {session} = useAuth();
+  const { session, loading } = useAuth();
   const { handleClickToRedirect } = useHandleRedirect();
   const pathname = usePathname();
-
-  if(!session) return null;
-
-  
+  console.log("The session is:", session);
+  if(loading || !session) return null;
 
   return (
-    <div className="absolute bottom-0 left-0 w-full min-h-10 flex flex-row !text-xl !border-t-1 !border-t-gray-500 items-center justify-evenly bg-gray-900">
+    <div className="absolute bottom-0 left-0 w-full min-h-14 !border-t-1 border-t-red-900 flex flex-row !text-xl  items-center justify-evenly bg-black">
       <Link
         className={pathname === "/Dashboard" ? "!text-cyan-500" : ""}
         onClick={() => handleClickToRedirect("/Dashboard")}

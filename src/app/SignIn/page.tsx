@@ -1,29 +1,24 @@
 "use client";
-import { useState, useActionState } from "react";
+import { useState, useEffect } from "react";
 import { Heading, Button, Input, Link } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthContext";
 
 const page = () => {
-  const auth = useAuth();
-  const route = useRouter();
+  const { signInUser, session, loading: authLoading } = useAuth();
+  const router = useRouter();
 
-  if (!auth) {
-    throw new Error("useAuth must be used within an AuthContextProvider");
-  }
-
-  const { signInUser, session } = auth;
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [gmailLoading, setGmailLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // prevent page refresh
     setLoading(true);
+
     const { success, error: signInError } = await signInUser(email, password);
+
     setLoading(false);
 
     if (signInError) {
@@ -31,31 +26,36 @@ const page = () => {
       return;
     }
     if (success) {
-      route.push("/Dashboard");
+      router.push("/Dashboard"); // redirect after login
     }
   };
 
-  if (session) {
-    route.push("/Dashboard");
-    return null;
-  }
+  // If already logged in, skip sign in page
+  useEffect(() => {
+    if (!authLoading && session) {
+      router.push("/Dashboard");
+    }
+  }, [session, authLoading, router]);
+  
 
   return (
     <div className="w-[90%] h-full flex flex-col items-center !m-auto gap-8 !mt-16">
       <Heading>Signin to your account</Heading>
-      <form action={handleSubmit} className="w-full flex flex-col gap-10">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-10">
         <div className="w-full flex flex-col gap-4">
-          <Input
-            onChange={(e) => e.target.value}
+          <Input            
             type="email"
             name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="Eg.saptarshi@example.com"
           />
-          <Input
-            onChange={(e) => e.target.value}
+          <Input            
             type="password"
             name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="password"
           />
@@ -67,7 +67,7 @@ const page = () => {
           <Button type="submit" loading={loading} variant={"solid"} colorPalette={"teal"}>
             Sign In
           </Button>
-           <Button loading={gmailLoading} variant={"solid"}>
+           <Button  variant={"solid"}>
           Sign In with Gmail
         </Button>
         </div>        

@@ -1,8 +1,23 @@
+'use client'
 import { Avatar, Text, Link } from "@chakra-ui/react";
-import React from "react";
 import { FaCamera } from "react-icons/fa";
+import { useAuth } from "../providers/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const page = () => {
+   const { session, loading } = useAuth();
+    const router = useRouter();
+  
+    // Redirect to SignIn if no session
+    useEffect(() => {
+      if (!loading && !session) {
+        router.push("/SignIn");
+      }
+    }, [session, loading, router]);
+  
+    if (loading) return <p>Loading...</p>;
+    if (!session) return null;
 
   return (
     <div className="w-full">

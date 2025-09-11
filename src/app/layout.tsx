@@ -7,6 +7,7 @@ import BottomMenu from "@/components/BottomMenu";
 import { LoadingProvider } from "@/app/providers/LoadingProvider";
 import { AuthContextProvider} from "./providers/AuthContext";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,6 +28,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  
   
   return (
     <html lang="en" suppressHydrationWarning>
@@ -39,7 +42,7 @@ export default function RootLayout({
               <LoadingProvider>
                 <Logo />
                 {children}
-                 <BottomMenu />
+                 <BottomMenu />                 
               </LoadingProvider>
             </AuthContextProvider>
           </Provider>

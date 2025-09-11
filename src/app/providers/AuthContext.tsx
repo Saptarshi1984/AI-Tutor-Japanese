@@ -18,7 +18,8 @@ interface AuthResult {
 }
 
 interface AuthContextType {
-  session: SessionType;  
+  session: SessionType;
+  loading:boolean;  
   signInUser: (email:string, password:string) => Promise<AuthResult>;
 }
 
@@ -30,6 +31,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   //Session state (user info, sign-in status)
   const [session, setSession] = useState<SessionType>(null);
+  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     async function getInitialSession() {
@@ -40,6 +43,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         }
         console.log(data.session);
         setSession(data.session);
+        setLoading(false);        
       } catch (error) {
         console.error("Error getting session:", error);
       }
@@ -74,8 +78,10 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  
+
   return (
-    <AuthContext.Provider value={{ session, signInUser }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, signInUser, loading }}>{children}</AuthContext.Provider>
   );
 };
 

@@ -2,13 +2,26 @@
 import React from "react";
 import { Heading, Text } from "@chakra-ui/react";
 import { PiBooksLight } from "react-icons/pi";
-
 import { useHandleRedirect } from "@/utils/helpers";
+import { useAuth } from "../providers/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const page = () => {
-  
-  const {handleClickToRedirect} = useHandleRedirect();
-  
+  const { handleClickToRedirect } = useHandleRedirect();
+  const { session, loading } = useAuth();
+  const router = useRouter();
+
+  // Redirect to SignIn if no session
+  useEffect(() => {
+    if (!loading && !session) {
+      router.push("/SignIn");
+    }
+  }, [session, loading, router]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!session) return null; // hide content until redirect
+
   return (
     <div className="flex flex-col items-center gap-8 !mt-10">
       <Heading>Lessons</Heading>
@@ -31,8 +44,9 @@ const page = () => {
         </div>
 
         <div
-        onClick={() => handleClickToRedirect("")} 
-        className="flex flex-row gap-4 items-center !p-2 cursor-pointer rounded-xl hover:bg-[#1a3232]">
+          onClick={() => handleClickToRedirect("")}
+          className="flex flex-row gap-4 items-center !p-2 cursor-pointer rounded-xl hover:bg-[#1a3232]"
+        >
           <div className="!text-3xl !p-2 text-gray-400 bg-gray-700 rounded-xl">
             <PiBooksLight />
           </div>
