@@ -31,6 +31,7 @@ const page = () => {
           btnText="Start"
         />
         <LessonCard
+          url={"/AI"}
           header="Chat with the AI Agent"
           text="Ask AI agent for clear roadmap to learn Japanese."
           btnText="Start"
