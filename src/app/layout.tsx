@@ -6,6 +6,8 @@ import Logo from "@/components/Logo";
 import BottomMenu from "@/components/BottomMenu";
 import { LoadingProvider } from "@/app/providers/LoadingProvider";
 import { AuthContextProvider} from "./providers/AuthContext";
+import Slider from "@/components/Slider";
+
 
 
 const geistSans = Geist({
@@ -41,6 +43,7 @@ export default function RootLayout({
             <AuthContextProvider>
               <LoadingProvider>
                 <Logo />
+                <Slider />                
                 {children}
                  <BottomMenu />                 
               </LoadingProvider>

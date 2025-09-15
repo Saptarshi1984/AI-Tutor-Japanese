@@ -21,7 +21,7 @@ const page = () => {
   if (!session) return null; // hide content until redirect
 
   return (
-    <div className="w-full !mt-12">
+    <div className="w-full !mt-20">
       <Heading className="w-96 !ml-6 !mb-2">Quick Access</Heading>
       <div className="flex flex-col gap-6">
         <LessonCard
