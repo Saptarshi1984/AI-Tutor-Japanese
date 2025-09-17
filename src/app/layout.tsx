@@ -5,9 +5,11 @@ import { Provider } from "@/components/ui/provider";
 import Logo from "@/components/Logo";
 import BottomMenu from "@/components/BottomMenu";
 import { LoadingProvider } from "@/app/providers/LoadingProvider";
-import { AuthContextProvider} from "./providers/AuthContext";
+import { AuthContextProvider } from "./providers/AuthContext";
+import { SliderProvider } from "./providers/SliderContext";
+import UserIconButton from "@/components/userIconButton";
 import Slider from "@/components/Slider";
-
+import MobileContainer from "@/components/MobileContainer";
 
 
 const geistSans = Geist({
@@ -30,22 +32,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  
   
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
-        <div className="relative w-[412px] h-[915px] !m-auto !border-1 !border-gray-600 bg-gray-950">
+        <div  className="relative w-[412px] h-[915px] !m-auto !border-1 !border-gray-600 bg-gray-950">
           <Provider>
             <AuthContextProvider>
               <LoadingProvider>
-                <Logo />
-                <Slider />                
-                {children}
-                 <BottomMenu />                 
+                <SliderProvider>
+                  <MobileContainer>
+                  {children}
+                  </MobileContainer>
+                </SliderProvider>
               </LoadingProvider>
             </AuthContextProvider>
           </Provider>

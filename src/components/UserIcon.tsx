@@ -14,7 +14,7 @@ const UserIcon = () => {
     <div className="cursor-pointer">
       <Avatar.Root>
         <Avatar.Fallback name='Guest'/>
-        <Avatar.Image src=''/>
+        <Avatar.Image src='/aa.png'/>
       </Avatar.Root>
     </div>
   );
