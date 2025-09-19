@@ -6,7 +6,7 @@ import Slider from "./Slider"; // or pass as prop
 import UserIconButton from "./userIconButton";
 import Logo from "./Logo";
 import BottomMenu from "./BottomMenu";
-import { useSlider } from "@/app/providers/SliderContext";
+
 
 const MobileContainer = ({ children }: { children: React.ReactNode }) => {
   const containerRef = useRef<HTMLDivElement>(null);

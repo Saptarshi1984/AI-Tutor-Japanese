@@ -6,8 +6,7 @@ import { useAuth } from "../providers/AuthContext";
 import { useLoading } from "../providers/LoadingProvider";
 
 const page = () => {
-  const { signInUser, session, loading: authLoading } = useAuth();
-  
+  const { signUpUser, session, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -20,17 +19,19 @@ const page = () => {
     e.preventDefault(); // prevent page refresh
     setLoading(true);
 
-    const { success, error: signInError } = await signInUser(email, password);
+    const { success, data,  error: signUpError } = await signUpUser(email, password);
 
     setLoading(false);
 
-    if (signInError) {
-      setError(signInError);
+    if (signUpError) {
+      setError(signUpError);
       return;
     }
-    if (success) {
+    if (success && data?.session ) {
       router.push("/Dashboard"); // redirect after login
+      return null;
     }
+    return null;
   };
 
   // If already logged in, skip sign in page
@@ -43,7 +44,7 @@ const page = () => {
 
   return (
     <div className="w-[90%] h-full flex flex-col items-center !m-auto gap-8 !mt-16">
-      <Heading>Signin to your account</Heading>
+      <Heading>Signup for your account</Heading>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-10">
         <div className="w-full flex flex-col gap-4">
           <Input            
@@ -62,22 +63,21 @@ const page = () => {
             required
             placeholder="password"
           />
-          <Link className="!text-gray-400 !text-[10px] !mt-[-8px] !ml-2">
-            Forgot Password?
-          </Link>
+          
+          
         </div>
         <div className="w-full flex flex-col gap-4">
           <Button type="submit" loading={loading} variant={"solid"} colorPalette={"teal"}>
-            Sign In
+            Sign Up
           </Button>
            <Button  variant={"solid"}>
-          Sign In with Gmail
+          Sign Up with Gmail
         </Button>
         </div>        
       </form>
       <div className="flex gap-2 text-gray-400">
-      <p>Don't have an account?</p>
-      <Link color={'teal.300'} _hover={{color:'teal.400'}} onClick={() => {router.push('/SignUp');pageLoading(true)}}>Sign Up</Link> 
+      <p>Already have an account?</p>
+      <Link color={'teal.300'} _hover={{color:'teal.400'}} onClick={() => {router.push('/SignIn');pageLoading(true)}}>Sign In</Link> 
       </div>
            
     </div>
