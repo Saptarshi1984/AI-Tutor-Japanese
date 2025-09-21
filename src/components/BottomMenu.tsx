@@ -13,7 +13,7 @@ const BottomMenu = () => {
   const { session, loading } = useAuth();
   const { handleClickToRedirect } = useHandleRedirect();
   const pathname = usePathname();
-  console.log("The session is:", session);
+  
   if(loading || !session) return null;
 
   return (

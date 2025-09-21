@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { Heading } from "@chakra-ui/react";
 import { supabase } from "@/app/config";
 import { useAuth } from "../providers/AuthContext";
 import { useRouter } from "next/navigation";
 import MCQ from "@/components/MCQ";
+
 
 const Page = () => {
   const { session, loading } = useAuth();
@@ -14,14 +15,16 @@ const Page = () => {
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Redirect to SignIn if no session
+
+
+  //  Redirect to SignIn if no session
   useEffect(() => {
     if (!loading && !session) {
       router.push("/SignIn");
     }
   }, [session, loading, router]);
 
-  // ✅ Fetch data when session exists
+  //  Fetch data when session exists
   useEffect(() => {
     const fetchData = async () => {
       setFetching(true);
@@ -51,10 +54,12 @@ const Page = () => {
   if (error) return <p>Error loading data: {error}</p>;
 
   return (
-    <div className="max-h-[834px] !mt-6 flex flex-col items-center">
+    <div      
+      className="relative max-h-[834px] !mt-6 flex flex-col items-center"
+    >
       <Heading>Japanese Level Test</Heading>
       <Heading>(MCQ - 20)</Heading>
-      <MCQ data={questions} />
+      <MCQ data={questions} />      
     </div>
   );
 };

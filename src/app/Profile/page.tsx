@@ -25,6 +25,7 @@ const page = () => {
   const [disabled, setDisabled] = useState(true);
   const [username, setUsername] = useState(profile?.username || "");
   const [isSaving, setIsSaving] = useState(false);
+  const [latestLevel, setLatestLevel] = useState<string>("");
 
   // Redirect to SignIn if no session
   useEffect(() => {
@@ -32,6 +33,35 @@ const page = () => {
       router.push("/SignIn");
     }
   }, [session, loading, router]);
+
+  useEffect(() => {
+  if (!session?.user?.id) return;
+
+  const fetchLatestLevel = async () => {
+    // If you want the latest across ALL tests:
+    const { data, error } = await supabase
+      .from("user_test_results")
+      .select("awarded_level, test_name, attempt_no, created_at")
+      .eq("user_id", session.user.id)
+      // .eq("test_name", "JLPT N5 MCQ") // ← uncomment if you want a specific test
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(); // returns null if no rows
+
+    if (error) {
+      console.error("Error fetching latest level:", error.message);
+      return;
+    }
+
+    if (data?.awarded_level) {
+      setLatestLevel(data.awarded_level);
+    } else {
+      setLatestLevel("Not tested yet");
+    }
+  };
+
+  fetchLatestLevel();
+}, [session]);
 
   useEffect(() => {
     if (session) {
@@ -80,6 +110,8 @@ const page = () => {
       .from("user_profiles")
       .update({ username })
       .eq("id", session?.user.id);
+
+      
 
     if (error) throw error;
 
@@ -155,12 +187,12 @@ const page = () => {
                       rounded-2xl !border-1 !border-gray-600"
         >
           <Text>Your Japanese Level</Text>
-          {level === "" ? (
+          {latestLevel === "" ? (
             <Link animation={"pulse"} color={"teal.400"} href="/JapLevelTest">
               Take a test here.
             </Link>
           ) : (
-            level
+           <Text fontSize={'lg'} color={'teal.400'} fontWeight={'bold'}>{latestLevel}</Text> 
           )}
         </div>
         <div className="w-100 flex flex-row justify-evenly">
