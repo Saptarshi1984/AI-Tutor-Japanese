@@ -1,13 +1,12 @@
 "use client";
 import { supabase } from "../config";
-import { Avatar, Text, Link, Input, Button } from "@chakra-ui/react";
+import { Avatar, Text, Link, Input, Button} from "@chakra-ui/react";
+import { Toaster, toaster } from "@/components/ui/toaster"
 import { FaCamera } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useAuth } from "../providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { MdOutlineEdit } from "react-icons/md";
-import { MouseEvent } from "react";
 
 type UserProfile = {
   username?: string;
@@ -26,6 +25,8 @@ const page = () => {
   const [username, setUsername] = useState(profile?.username || "");
   const [isSaving, setIsSaving] = useState(false);
   const [latestLevel, setLatestLevel] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Redirect to SignIn if no session
   useEffect(() => {
@@ -35,33 +36,33 @@ const page = () => {
   }, [session, loading, router]);
 
   useEffect(() => {
-  if (!session?.user?.id) return;
+    if (!session?.user?.id) return;
 
-  const fetchLatestLevel = async () => {
-    // If you want the latest across ALL tests:
-    const { data, error } = await supabase
-      .from("user_test_results")
-      .select("awarded_level, test_name, attempt_no, created_at")
-      .eq("user_id", session.user.id)
-      // .eq("test_name", "JLPT N5 MCQ") // ← uncomment if you want a specific test
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(); // returns null if no rows
+    const fetchLatestLevel = async () => {
+      // If you want the latest across ALL tests:
+      const { data, error } = await supabase
+        .from("user_test_results")
+        .select("awarded_level, test_name, attempt_no, created_at")
+        .eq("user_id", session.user.id)
+        // .eq("test_name", "JLPT N5 MCQ") // ← uncomment if you want a specific test
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(); // returns null if no rows
 
-    if (error) {
-      console.error("Error fetching latest level:", error.message);
-      return;
-    }
+      if (error) {
+        console.error("Error fetching latest level:", error.message);
+        return;
+      }
 
-    if (data?.awarded_level) {
-      setLatestLevel(data.awarded_level);
-    } else {
-      setLatestLevel("Not tested yet");
-    }
-  };
+      if (data?.awarded_level) {
+        setLatestLevel(data.awarded_level);
+      } else {
+        setLatestLevel("Not tested yet");
+      }
+    };
 
-  fetchLatestLevel();
-}, [session]);
+    fetchLatestLevel();
+  }, [session]);
 
   useEffect(() => {
     if (session) {
@@ -103,120 +104,181 @@ const page = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSaving(true);
-  try {
-    const { error } = await supabase
-      .from("user_profiles")
-      .update({ username })
-      .eq("id", session?.user.id);
+    e.preventDefault();
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from("user_profiles")
+        .update({ username })
+        .eq("id", session?.user.id);
 
-      
+      if (error) throw error;
 
-    if (error) throw error;
+      setDisabled(true); // lock input again
+    } catch (err) {
+      console.error("Failed to update profile:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
-    setDisabled(true); // lock input again
-  } catch (err) {
-    console.error("Failed to update profile:", err);
-  } finally {
-    setIsSaving(false);
-  }
-};
+  const onClickCamera = () => {
+    inputRef.current?.click();
+  };
 
-  
+  const onFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !session?.user?.id) return;
+
+    if (!file.type.startsWith("image/")) {
+      toaster.create({ type: "error", title: "Please select an image file" });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toaster.create({ type: "error", title: "Max size is 2MB" });
+      return;
+    }
+    setUploading(true);
+
+    try {
+      // 1) Create a unique path: avatars/<userId>/<timestamp>.<ext>
+      const userId = session.user.id;
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `avatar/${userId}/${Date.now()}.${ext}`;
+
+      // 2) Upload to your *public* bucket (change name if needed)
+      const { error: uploadError } = await supabase.storage
+        .from("user_avatars")
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: true, // overwrite if same path
+        });
+      if (uploadError) throw uploadError;
+
+      // 3) Get a public URL
+      const { data: pub } = await supabase.storage
+        .from("user_avatars")
+        .getPublicUrl(path);
+      const publicUrl = pub.publicUrl;
+
+      // 4) Save the URL to your profile row
+      const { error: updateError } = await supabase
+        .from("user_profiles")
+        .update({ avatar_url: publicUrl })
+        .eq("id", userId);
+
+      if (updateError) throw updateError;
+
+      toaster.create({ title: "Profile image updated", type: 'success' });
+    } catch (error: any) {
+      // clear the file input so selecting the same file again triggers onChange
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  };
+
 
   return (
     <div className="w-full">
+      <Toaster />
       <div className="w-full h-64 flex flex-col items-center justify-evenly !mt-10 gap-4">
         <Avatar.Root className="relative w-90" size={"2xl"}>
-          <Avatar.Fallback name={name} />
-          <Avatar.Image src={avatar} />
-          <Link>
+          {avatar ? <Avatar.Image src={avatar} /> : <Avatar.Fallback name={name} />}
+          <Link onClick={onClickCamera} aria-label="Change profile photo">
             <span className="absolute bottom-1 right-[1px] !text-sm">
               <FaCamera />
             </span>
           </Link>
         </Avatar.Root>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={onFileSelected}
+        />
         <div className="relative w-90 flex flex-col gap-4 !text-xs text-gray-400">
           <div className="flex flex-row items-center gap-2">
-            
-            <form onSubmit={handleSubmit} className="relative w-full flex flex-col gap-4">
-  <div className="flex flex-row items-center gap-2">
-    <Text>Name:</Text>
-    <Input
-      size="xs"
-      focusRingColor="teal.700"
-      placeholder={name}
-      disabled={disabled}
-      value={username}
-      onChange={(e) => setUsername(e.target.value)}
-    />
-    <span
-      onClick={handleEdit}
-      className="cursor-pointer hover:text-teal-500"
-    >
-      <MdOutlineEdit />
-    </span>
-  </div>
+            <form
+              onSubmit={handleSubmit}
+              className="relative w-full flex flex-col gap-4"
+            >
+              <div className="flex flex-row items-center gap-2">
+                <Text>Name:</Text>
+                <Input
+                  size="xs"
+                  focusRingColor="teal.700"
+                  placeholder={name}
+                  disabled={disabled}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <span
+                  onClick={handleEdit}
+                  className="cursor-pointer hover:text-teal-500"
+                >
+                  <MdOutlineEdit />
+                </span>
+              </div>
 
-  <Text>Email: {email}</Text>
-  <Text>Joined on {joined}</Text>
+              <Text>Email: {email}</Text>
+              <Text>Joined on {joined}</Text>
 
-  {!disabled && (
-    <div className="absolute right-0 bottom-0">
-      <Button
-        type="submit"
-        variant="outline"
-        colorPalette="teal"
-        size="xs"
-        loading={isSaving}
-      >
-        Save
-      </Button>
-    </div>
-  )}
-</form>
-          
+              {!disabled && (
+                <div className="absolute right-0 bottom-0">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    colorPalette="teal"
+                    size="xs"
+                    loading={isSaving}
+                  >
+                    Save
+                  </Button>
+                </div>
+              )}
+            </form>
+          </div>
+          <div className="w-full h-[0.5px] bg-gray-700"></div>
         </div>
-        <div className="w-full h-[0.5px] bg-gray-700"></div>
-      </div>
 
-      <div className="w-98 flex flex-col gap-6 items-center !mx-auto !mt-10 ">
-        <div
-          className="w-60 min-h-20 flex flex-col gap-2 items-center justify-center 
-                      rounded-2xl !border-1 !border-gray-600"
-        >
-          <Text>Your Japanese Level</Text>
-          {latestLevel === "" ? (
-            <Link animation={"pulse"} color={"teal.400"} href="/JapLevelTest">
-              Take a test here.
-            </Link>
-          ) : (
-           <Text fontSize={'lg'} color={'teal.400'} fontWeight={'bold'}>{latestLevel}</Text> 
-          )}
-        </div>
-        <div className="w-100 flex flex-row justify-evenly">
+        <div className="w-98 flex flex-col gap-6 items-center !mx-auto !mt-10 ">
           <div
-            className="w-40 min-h-20 flex flex-col items-center justify-center 
+            className="w-60 min-h-20 flex flex-col gap-2 items-center justify-center 
                       rounded-2xl !border-1 !border-gray-600"
           >
-            <Text>Total Score</Text>
+            <Text>Your Japanese Level</Text>
+            {latestLevel === "" ? (
+              <Link animation={"pulse"} color={"teal.400"} href="/JapLevelTest">
+                Take a test here.
+              </Link>
+            ) : (
+              <Text fontSize={"lg"} color={"teal.400"} fontWeight={"bold"}>
+                {latestLevel}
+              </Text>
+            )}
+          </div>
+          <div className="w-100 flex flex-row justify-evenly">
+            <div
+              className="w-40 min-h-20 flex flex-col items-center justify-center 
+                      rounded-2xl !border-1 !border-gray-600"
+            >
+              <Text>Total Score</Text>
+            </div>
+            <div
+              className="w-40 min-h-20 flex flex-col items-center justify-center 
+                      rounded-2xl !border-1 !border-gray-600"
+            >
+              <Text>Vocabulary</Text>
+            </div>
           </div>
           <div
-            className="w-40 min-h-20 flex flex-col items-center justify-center 
+            className="w-60 min-h-20 flex flex-col items-center justify-center 
                       rounded-2xl !border-1 !border-gray-600"
           >
-            <Text>Vocabulary</Text>
+            <Text>Japanese Character</Text>
           </div>
         </div>
-        <div
-          className="w-60 min-h-20 flex flex-col items-center justify-center 
-                      rounded-2xl !border-1 !border-gray-600"
-        >
-          <Text>Japanese Character</Text>
-        </div>
       </div>
-    </div>
     </div>
   );
 };
