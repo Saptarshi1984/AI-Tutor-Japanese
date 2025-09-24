@@ -38,7 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
-        <div  className="relative w-[412px] h-[915px] !m-auto !border-1 !border-gray-600 bg-gray-950">
+        <div  className="relative w-[412px] h-[915px] !m-auto">
           <Provider>
             <AuthContextProvider>
               <LoadingProvider>

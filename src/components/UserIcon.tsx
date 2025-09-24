@@ -28,7 +28,7 @@ const UserIcon = () => {
     };
 
     fetchProfile();
-  }, [session]);
+  }, [session, avatarUrl]);
 
   if (!session) return null;
 
@@ -37,7 +37,7 @@ const UserIcon = () => {
       <Avatar.Root>
         <Avatar.Fallback name={username} />
         {avatarUrl && <Avatar.Image src={avatarUrl} />}
-        <Avatar.Image src="/aa.png" />
+        
       </Avatar.Root>
     </div>
   );

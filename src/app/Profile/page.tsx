@@ -1,7 +1,7 @@
 "use client";
 import { supabase } from "../config";
-import { Avatar, Text, Link, Input, Button} from "@chakra-ui/react";
-import { Toaster, toaster } from "@/components/ui/toaster"
+import { Avatar, Text, Link, Input, Button } from "@chakra-ui/react";
+import { Toaster, toaster } from "@/components/ui/toaster";
 import { FaCamera } from "react-icons/fa";
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useAuth } from "../providers/AuthContext";
@@ -126,55 +126,71 @@ const page = () => {
     inputRef.current?.click();
   };
 
-  const onFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !session?.user?.id) return;
+ const onFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file || !session?.user?.id) return;
 
-    if (!file.type.startsWith("image/")) {
-      toaster.create({ type: "error", title: "Please select an image file" });
+  if (!file.type.startsWith("image/")) {
+    toaster.create({ type: "error", title: "Please select an image file" });
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    toaster.create({ type: "error", title: "Max size is 2MB" });
+    return;
+  }
+
+  setUploading(true);
+  try {
+    const userId = session.user.id;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const path = `avatar/${userId}/${Date.now()}.${ext}`;
+
+    // 1) Upload
+    const { error: uploadError } = await supabase.storage
+      .from("user_avatars")
+      .upload(path, file, {
+        cacheControl: "3600",
+        contentType: file.type,
+        /* upsert: true, // requires UPDATE policy */
+      });
+
+    if (uploadError) {
+      console.error("[UPLOAD ERROR]", uploadError.message);
+      toaster.create({ type: "error", title: "Upload failed", description: uploadError.message });
       return;
     }
-    if (file.size > 2 * 1024 * 1024) {
-      toaster.create({ type: "error", title: "Max size is 2MB" });
+
+    // 2) Public URL (no error returned here)
+    const { data: pub } = supabase.storage
+      .from("user_avatars")
+      .getPublicUrl(path);
+
+    const publicUrl = pub.publicUrl;
+
+    // 3) Update profile
+    const { error: updateError } = await supabase
+      .from("user_profiles")
+      .update({ avatar_url: publicUrl })
+      .eq("id", userId);
+
+    if (updateError) {
+      console.error("[PROFILE UPDATE ERROR]", updateError.message);
+      toaster.create({ type: "error", title: "Profile update failed", description: updateError.message });
       return;
     }
-    setUploading(true);
 
-    try {
-      // 1) Create a unique path: avatars/<userId>/<timestamp>.<ext>
-      const userId = session.user.id;
-      const ext = file.name.split(".").pop() || "jpg";
-      const path = `avatar/${userId}/${Date.now()}.${ext}`;
+    // 4) Update UI
+    setProfile(prev => (prev ? { ...prev, avatar_url: publicUrl } : prev));
+    toaster.create({ type: "success", title: "Profile image updated" });
+  } catch (err: any) {
+    console.error("[UNEXPECTED]", err);
+    toaster.create({ type: "error", title: "Unexpected error", description: err?.message ?? "Try again" });
+  } finally {
+    setUploading(false);
+    if (inputRef.current) inputRef.current.value = "";
+  }
+};
 
-      // 2) Upload to your *public* bucket (change name if needed)
-      const { error: uploadError } = await supabase.storage
-        .from("user_avatars")
-        .upload(path, file, {
-          cacheControl: "3600",
-          upsert: true, // overwrite if same path
-        });
-      if (uploadError) throw uploadError;
-
-      // 3) Get a public URL
-      const { data: pub } = await supabase.storage
-        .from("user_avatars")
-        .getPublicUrl(path);
-      const publicUrl = pub.publicUrl;
-
-      // 4) Save the URL to your profile row
-      const { error: updateError } = await supabase
-        .from("user_profiles")
-        .update({ avatar_url: publicUrl })
-        .eq("id", userId);
-
-      if (updateError) throw updateError;
-
-      toaster.create({ title: "Profile image updated", type: 'success' });
-    } catch (error: any) {
-      // clear the file input so selecting the same file again triggers onChange
-      if (inputRef.current) inputRef.current.value = "";
-    }
-  };
 
 
   return (
@@ -182,7 +198,11 @@ const page = () => {
       <Toaster />
       <div className="w-full h-64 flex flex-col items-center justify-evenly !mt-10 gap-4">
         <Avatar.Root className="relative w-90" size={"2xl"}>
-          {avatar ? <Avatar.Image src={avatar} /> : <Avatar.Fallback name={name} />}
+          {avatar ? (
+            <Avatar.Image src={avatar} />
+          ) : (
+            <Avatar.Fallback name={name} />
+          )}
           <Link onClick={onClickCamera} aria-label="Change profile photo">
             <span className="absolute bottom-1 right-[1px] !text-sm">
               <FaCamera />
@@ -278,6 +298,12 @@ const page = () => {
             <Text>Japanese Character</Text>
           </div>
         </div>
+        <div
+            className="w-60 min-h-20 flex flex-col items-center justify-center 
+                      rounded-2xl !border-1 !border-gray-600"
+          >
+            <Text>Global Rankings</Text>
+          </div>
       </div>
     </div>
   );
