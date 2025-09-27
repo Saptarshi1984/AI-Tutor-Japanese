@@ -24,7 +24,7 @@ const Slider = ({ containerRef }: SliderProps) => {
   const handleSignOut = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const { success, error } = await signOutUser();
+    const { success } = await signOutUser();
     if (success) {
       //navigate to sign-in page
       closeSlider();

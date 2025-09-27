@@ -7,12 +7,15 @@ import { useAuth } from "../providers/AuthContext";
 import { useRouter } from "next/navigation";
 import MCQ from "@/components/MCQ";
 
+interface Option { text: string; is_correct: boolean }
+interface Question { question: string; options: Option[] }
+
 
 const Page = () => {
   const { session, loading } = useAuth();
   const router = useRouter();
 
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
