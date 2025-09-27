@@ -31,7 +31,7 @@ const JapaneseCharacters = () => {
         >
           <SimpleGrid columns={[2, 3, 5]} gap={"4"} m={"auto"}>
             {hiraganas.map((char: characterType) => (
-              <CharacterBox character={char.character} romaji={char.romaji} />
+              <CharacterBox key={char.character} character={char.character} romaji={char.romaji} />
             ))}
           </SimpleGrid>
         </Tabs.Content>

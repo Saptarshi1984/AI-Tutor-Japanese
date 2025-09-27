@@ -7,7 +7,7 @@ import {
   ReactNode,
 } from "react";
 import { supabase } from "../config";
-import type { AuthError, Session } from "@supabase/supabase-js";
+import type { Session } from "@supabase/supabase-js";
 
 type SessionType = Session | null;
 

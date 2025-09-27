@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
-import Logo from "@/components/Logo";
-import BottomMenu from "@/components/BottomMenu";
 import { LoadingProvider } from "@/app/providers/LoadingProvider";
 import { AuthContextProvider } from "./providers/AuthContext";
 import { SliderProvider } from "./providers/SliderContext";
-import UserIconButton from "@/components/userIconButton";
-import Slider from "@/components/Slider";
 import MobileContainer from "@/components/MobileContainer";
 
 

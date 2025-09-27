@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthContext";
 import { useLoading } from "../providers/LoadingProvider";
 
-const page = () => {
+const Page = () => {
   const { signUpUser, session, loading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -84,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

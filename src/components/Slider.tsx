@@ -1,8 +1,8 @@
 "use client";
 
+import { RefObject, useState, MouseEvent, useEffect } from "react";
 import { Drawer, Portal, CloseButton, Button, Heading } from "@chakra-ui/react";
 import { supabase } from "@/app/config";
-import { RefObject, useState, MouseEvent, useEffect } from "react";
 import { useSlider } from "@/app/providers/SliderContext";
 import { useAuth } from "@/app/providers/AuthContext";
 import { useRouter } from "next/navigation";

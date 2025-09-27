@@ -1,12 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/AuthContext";
 import { Heading } from "@chakra-ui/react";
 import LessonCard from "@/components/LessonCard";
-import { useAuth } from "../providers/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const page = () => {
+
+const Page = () => {
   const { session, loading } = useAuth();
   const router = useRouter();
 
@@ -51,4 +52,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

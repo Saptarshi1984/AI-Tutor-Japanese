@@ -3,11 +3,10 @@ import React from 'react'
 
 interface characterBoxProps {
     character: string;
-    romaji: string;
-    iPlay?: (url:string) => void;
+    romaji: string;    
 }
 
-const CharacterBox = ({character, romaji, iPlay}:characterBoxProps) => {
+const CharacterBox = ({character, romaji}:characterBoxProps) => {
   return (
     <div className='w-[56px] h-[56px] !p-1 flex flex-col items-center 
          justify-evenly !border-2 !border-cyan-700 rounded-xl

@@ -1,9 +1,10 @@
 "use client";
+
+import { useState, useRef, useEffect, MouseEvent } from "react";
 import { supabase } from "../config";
 import { Avatar, Text, Link, Input, Button } from "@chakra-ui/react";
 import { Toaster, toaster } from "@/components/ui/toaster";
 import { FaCamera } from "react-icons/fa";
-import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useAuth } from "../providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { MdOutlineEdit } from "react-icons/md";
@@ -16,7 +17,7 @@ type UserProfile = {
   created_at?: string;
 };
 
-const page = () => {
+const Page = () => {
   const { session, loading } = useAuth();
   const router = useRouter();
 
@@ -309,4 +310,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

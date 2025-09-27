@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
+
+import { useEffect } from "react";
 import { Heading, Text } from "@chakra-ui/react";
 import { PiBooksLight } from "react-icons/pi";
 import { useHandleRedirect } from "@/utils/helpers";
 import { useAuth } from "../providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const page = () => {
+
+const Page = () => {
   const { handleClickToRedirect } = useHandleRedirect();
   const { session, loading } = useAuth();
   const router = useRouter();
@@ -62,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
