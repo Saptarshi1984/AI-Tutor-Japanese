@@ -14,7 +14,7 @@ type SliderProps = {
 
 const Slider = ({ containerRef }: SliderProps) => {
   const { signOutUser, session } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+  /* const [error, setError] = useState<string | null>(null); */
   const [username, setUsername] = useState("Not given");
   const { isOpen, closeSlider } = useSlider();
   const { setLoading } = useLoading();
@@ -31,7 +31,7 @@ const Slider = ({ containerRef }: SliderProps) => {
       setLoading(true);
       r.push("/SignIn");
     } else {
-      setError(error || "An unexpected error occurred.");
+      /* setError(error || "An unexpected error occurred."); */
     }
   };
 

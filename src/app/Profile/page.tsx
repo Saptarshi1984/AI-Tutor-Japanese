@@ -26,7 +26,7 @@ const Page = () => {
   const [username, setUsername] = useState(profile?.username || "");
   const [isSaving, setIsSaving] = useState(false);
   const [latestLevel, setLatestLevel] = useState<string>("");
-  const [uploading, setUploading] = useState(false);
+  
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Redirect to SignIn if no session
@@ -94,7 +94,7 @@ const Page = () => {
   const name = profile?.username || "Type your name";
   const email = profile?.email || "No email";
   const avatar = profile?.avatar_url || "";
-  const level = profile?.user_level || "";
+  /* const level = profile?.user_level || ""; */
   const joined = profile?.created_at
     ? new Date(profile.created_at).toLocaleDateString()
     : "Unknown";
@@ -140,7 +140,7 @@ const Page = () => {
     return;
   }
 
-  setUploading(true);
+  
   try {
     const userId = session.user.id;
     const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
@@ -187,7 +187,7 @@ const Page = () => {
     console.error("[UNEXPECTED]", err);
     toaster.create({ type: "error", title: "Unexpected error", description: err?.message ?? "Try again" });
   } finally {
-    setUploading(false);
+    
     if (inputRef.current) inputRef.current.value = "";
   }
 };

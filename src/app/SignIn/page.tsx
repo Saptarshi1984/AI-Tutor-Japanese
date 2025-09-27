@@ -13,7 +13,7 @@ const Page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  /* const [error, setError] = useState<string | null>(null); */
   const { setLoading: pageLoading } = useLoading();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +25,7 @@ const Page = () => {
     setLoading(false);
 
     if (signInError) {
-      setError(signInError);
+      /* setError(signInError); */
       return;
     }
     if (success) {
