@@ -7,22 +7,27 @@ import {
   ReactNode,
 } from "react";
 import { supabase } from "../config";
-import type { Session } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 
 type SessionType = Session | null;
 
-interface AuthResult {
+type AuthData = {
+  user: User | null;
+  session: Session | null;
+};
+
+interface AuthResult<T = unknown> {
   success?: boolean;
-  data?: any; // You can replace `any` with `AuthResponse` from Supabase types
+  data?: T; 
   error?: string;
 }
 
 interface AuthContextType {
   session: SessionType;
   loading: boolean;
-  signInUser: (email: string, password: string) => Promise<AuthResult>;
+  signInUser: (email: string, password: string) => Promise<AuthResult<AuthData>>;
   signOutUser: () => Promise<AuthResult>;
-  signUpUser: (email: string, password: string) => Promise<AuthResult>;
+  signUpUser: (email: string, password: string) => Promise<AuthResult<AuthData>>;
 }
 
 interface AuthProviderProps {
@@ -62,7 +67,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   const signInUser = async (
     email: string,
     password: string
-  ): Promise<AuthResult> => {
+  ): Promise<AuthResult<AuthData>> => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase(),
@@ -106,7 +111,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   const signUpUser = async (
     email: string,
     password: string
-  ): Promise<AuthResult> => {
+  ): Promise<AuthResult<AuthData>> => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.toLowerCase(),

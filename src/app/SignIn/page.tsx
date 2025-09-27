@@ -78,7 +78,7 @@ const Page = () => {
         </div>
       </form>
       <div className="flex gap-2 text-gray-400">
-        <p>Don't have an account?</p>
+        <p>{"Don't have an account?"}</p>
         <Link
           color={"teal.300"}
           _hover={{ color: "teal.400" }}

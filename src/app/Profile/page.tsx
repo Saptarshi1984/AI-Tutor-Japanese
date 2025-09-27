@@ -183,9 +183,9 @@ const Page = () => {
     // 4) Update UI
     setProfile(prev => (prev ? { ...prev, avatar_url: publicUrl } : prev));
     toaster.create({ type: "success", title: "Profile image updated" });
-  } catch (err: any) {
-    console.error("[UNEXPECTED]", err);
-    toaster.create({ type: "error", title: "Unexpected error", description: err?.message ?? "Try again" });
+  } catch (error) {
+    console.error("[UNEXPECTED]", error);
+    toaster.create({ type: "error", title: "Unexpected error", description: error ??  "Try again" });
   } finally {
     
     if (inputRef.current) inputRef.current.value = "";

@@ -27,7 +27,7 @@ const Page = () => {
     <div className="flex flex-col items-center gap-8 !mt-10">
       <Heading>Lessons</Heading>
       <div className="w-98 flex flex-col gap-6 !m-auto">
-        <Heading>Beginner's Basics</Heading>
+        <Heading>{"Beginner's Basics"}</Heading>
 
         <div
           onClick={() => handleClickToRedirect("/LearnCharacter")}
