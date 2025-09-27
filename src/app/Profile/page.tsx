@@ -65,28 +65,27 @@ const Page = () => {
     fetchLatestLevel();
   }, [session]);
 
-  useEffect(() => {
-    if (!session?.user?.id) return ; 
+ useEffect(() => {
+  if (!session?.user?.id) return;
 
-      const fetchUserData = async () => {
+  const fetchUserData = async () => {
     try {
       const { data, error } = await supabase
         .from("user_profiles")
         .select("username, email, avatar_url, user_level, created_at")
-        .eq("id", session?.user.id)
+        .eq("id", session.user.id)
         .single();
 
-      console.log("Fetched profile data:", data);
       if (error) throw error;
-
       setProfile(data);
-    } catch (error) {
-      console.error("Error getting user data:", error);
+    } catch (err) {
+      console.error("Error getting user data:", err);
     }
-    fetchUserData();
-      
-    }
-  }, [session]);
+  };
+
+  fetchUserData(); // <-- call it here (outside the function body)
+}, [session?.user?.id]);
+
 
 
 
