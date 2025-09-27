@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { FaAnglesUp } from "react-icons/fa6";
 import { FaAnglesDown } from "react-icons/fa6";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface FaqProps {
   func: (input: string) => Promise<void>;
