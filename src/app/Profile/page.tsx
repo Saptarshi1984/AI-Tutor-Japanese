@@ -66,12 +66,9 @@ const Page = () => {
   }, [session]);
 
   useEffect(() => {
-    if (session) {
-      fetchUserData();
-    }
-  }, [session]);
+    if (!session?.user?.id) return ; 
 
-  const fetchUserData = async () => {
+      const fetchUserData = async () => {
     try {
       const { data, error } = await supabase
         .from("user_profiles")
@@ -86,7 +83,12 @@ const Page = () => {
     } catch (error) {
       console.error("Error getting user data:", error);
     }
-  };
+    fetchUserData();
+      
+    }
+  }, [session]);
+
+
 
   if (loading || !session) return <p>Loading...</p>;
   /* if (!session) return null; */
