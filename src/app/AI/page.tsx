@@ -1,17 +1,16 @@
 "use client";
-import { Heading, Input, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../providers/AuthContext";
+import { Heading, Button } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import Faq from "@/components/Faq";
-import { useAuth } from "../providers/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const page = () => {
+const Page = () => {
   const [message, setMessage] = useState("");
   const [userInput, setUserInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const { session, loading:isLoading } = useAuth();
+  const { session, loading: isLoading } = useAuth();
   const router = useRouter();
 
   // Redirect to SignIn if no session
@@ -101,4 +100,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
