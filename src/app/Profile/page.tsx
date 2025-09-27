@@ -83,7 +83,7 @@ const Page = () => {
     }
   };
 
-  fetchUserData(); // <-- call it here (outside the function body)
+  fetchUserData(); 
 }, [session?.user?.id]);
 
 

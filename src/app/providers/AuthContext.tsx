@@ -18,7 +18,7 @@ type AuthData = {
 
 interface AuthResult<T = unknown> {
   success?: boolean;
-  data?: T; 
+  data?: T;
   error?: string;
 }
 
@@ -26,6 +26,7 @@ interface AuthContextType {
   session: SessionType;
   loading: boolean;
   signInUser: (email: string, password: string) => Promise<AuthResult<AuthData>>;
+  signInWithGoogle: () => Promise<AuthResult>;
   signOutUser: () => Promise<AuthResult>;
   signUpUser: (email: string, password: string) => Promise<AuthResult<AuthData>>;
 }
@@ -35,8 +36,9 @@ interface AuthProviderProps {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
 export const AuthContextProvider = ({ children }: AuthProviderProps) => {
-  //Session state (user info, sign-in status)
+  // Session state (user info, sign-in status)
   const [session, setSession] = useState<SessionType>(null);
   const [loading, setLoading] = useState(true);
 
@@ -54,19 +56,20 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         console.error("Error getting session:", error);
       }
     }
+
     getInitialSession();
 
-    //2) Listen for changes in auth state (.onAuthStateChange())
+    // 2) Listen for changes in auth state (.onAuthStateChange())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       console.log("Session changed:", session);
     });
   }, []);
 
-  //Auth functions (signin, signup, logout)
+  // Auth functions (signin, signup, logout)
   const signInUser = async (
     email: string,
-    password: string
+    password: string,
   ): Promise<AuthResult<AuthData>> => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -77,11 +80,11 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         console.error("Supabase sign-in error:", error.message);
         return { success: false, error: error.message };
       }
-      //success
+      // success
       console.log("Supabase sign-in success:", data);
       return { success: true, data };
     } catch (error) {
-      //Unexpected error
+      // Unexpected error
       console.error("Unexpected error during sign-in:", error);
       return {
         success: false,
@@ -90,7 +93,33 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  //Sign Out
+  // Sign in with Google
+  const signInWithGoogle = async (): Promise<AuthResult> => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        console.error("Supabase Google sign-in error:", error.message);
+        return { success: false, error: error.message };
+      }
+
+      if (data?.url && typeof window !== "undefined") {
+        window.location.href = data.url;
+      }
+
+      return { success: true, data };
+    } catch (error) {
+      console.error("Unexpected error during Google sign-in:", error);
+      return {
+        success: false,
+        error: "An unexpected error occurred. Please try again.",
+      };
+    }
+  };
+
+  // Sign Out
   const signOutUser = async () => {
     try {
       const { error } = await supabase.auth.signOut();
@@ -107,30 +136,31 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
       };
     }
   };
-  //signUp user
+
+  // Sign up user
   const signUpUser = async (
     email: string,
-    password: string
+    password: string,
   ): Promise<AuthResult<AuthData>> => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.toLowerCase(),
         password: password,
         options: {
-          data:{
-            email:email.toLowerCase()
-          }
-        }        
+          data: {
+            email: email.toLowerCase(),
+          },
+        },
       });
       if (error) {
         console.error("Supabase sign-up error:", error.message);
         return { success: false, error: error.message };
       }
-      //success
+      // success
       console.log("Supabase sign-up success:", data);
       return { success: true, data };
     } catch (error) {
-      //Unexpected error
+      // Unexpected error
       console.error("Unexpected error during sign-up:", error);
       return {
         success: false,
@@ -139,9 +169,10 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-
   return (
-    <AuthContext.Provider value={{ session, signInUser, signOutUser, signUpUser, loading }}>
+    <AuthContext.Provider
+      value={{ session, signInUser, signInWithGoogle, signOutUser, signUpUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );

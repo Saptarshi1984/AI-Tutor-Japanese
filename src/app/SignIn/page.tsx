@@ -1,12 +1,14 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { Heading, Button, Input, Link } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthContext";
 import { useLoading } from "../providers/LoadingProvider";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 const Page = () => {
-  const { signInUser, session, loading: authLoading } = useAuth();
+  const { signInUser, signInWithGoogle, session, loading: authLoading } = useAuth();
 
   const router = useRouter();
 
@@ -32,6 +34,20 @@ const Page = () => {
       router.push("/Dashboard"); // redirect after login
     }
   };
+
+  const handleGoogleSignIn = async (e: React.FormEvent) => {
+        e.preventDefault();
+    const {success, error: GoogleSignInError} = await signInWithGoogle();
+
+    if (GoogleSignInError) {
+      /* setError(signInError); */
+      return;
+    }
+    if (success) {
+      router.push("/Dashboard"); // redirect after login
+    }
+    
+  }
 
   // If already logged in, skip sign in page
   useEffect(() => {
@@ -74,7 +90,8 @@ const Page = () => {
           >
             Sign In
           </Button>
-          <Button variant={"solid"}>Sign In with Gmail</Button>
+          
+          <GoogleSignInButton onClick={handleGoogleSignIn} />
         </div>
       </form>
       <div className="flex gap-2 text-gray-400">
