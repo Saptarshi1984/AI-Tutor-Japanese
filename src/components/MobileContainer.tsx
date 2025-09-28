@@ -14,7 +14,8 @@ const MobileContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-[412px] h-[915px] mx-auto border border-gray-600 bg-gray-950 overflow-hidden"
+      className="relative mx-auto flex w-full max-w-[26rem] flex-col overflow-hidden  !border !border-gray-700 bg-gray-950 shadow-xl"
+      style={{ height: "min(915px, calc(100svh - 3rem))", minHeight: "min(640px, calc(100svh - 3rem))" }}
     >
       <UserIconButton />
       <Logo />

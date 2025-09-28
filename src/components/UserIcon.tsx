@@ -34,7 +34,7 @@ const UserIcon = () => {
 
   return (
     <div className="cursor-pointer">
-      <Avatar.Root>
+      <Avatar.Root size="sm" className="shadow-inner">
         <Avatar.Fallback name={username} />
         {avatarUrl && <Avatar.Image src={avatarUrl} />}
         

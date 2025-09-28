@@ -32,9 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-950 text-white`}
       >
-        <div  className="relative w-[412px] h-[915px] !m-auto">
+        <div className="flex min-h-svh w-full items-center justify-center px-4 py-6 lg:px-8">
           <Provider>
             <AuthContextProvider>
               <LoadingProvider>

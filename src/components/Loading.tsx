@@ -8,18 +8,17 @@ type LoadingProps = {
 
 const Loading = ({ show }: LoadingProps) => {
   if (!show) return null;
+
   return (
-    <>
-      <div className="absolute left-[45%] top-[45%]">
-        <ProgressCircle.Root value={null} colorPalette={"cyan"}>
-          <ProgressCircle.Circle>
-            <ProgressCircle.Track />
-            <ProgressCircle.Range />
-          </ProgressCircle.Circle>
-          <ProgressCircle.ValueText />
-        </ProgressCircle.Root>
-      </div>
-    </>
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/30">
+      <ProgressCircle.Root value={null} colorPalette={"cyan"}>
+        <ProgressCircle.Circle>
+          <ProgressCircle.Track />
+          <ProgressCircle.Range />
+        </ProgressCircle.Circle>
+        <ProgressCircle.ValueText />
+      </ProgressCircle.Root>
+    </div>
   );
 };
 
