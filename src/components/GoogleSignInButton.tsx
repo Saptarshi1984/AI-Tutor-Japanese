@@ -1,29 +1,28 @@
-"use client";
+﻿"use client";
 
 import { forwardRef } from "react";
-import { IconButton } from "@chakra-ui/react";
-import type { IconButtonProps } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import type { ButtonProps } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
-export type GoogleSignInButtonProps = Omit<IconButtonProps, "aria-label" | "children">;
+export type GoogleSignInButtonProps = Omit<ButtonProps, "children">;
 
 export const GoogleSignInButton = forwardRef<HTMLButtonElement, GoogleSignInButtonProps>(
   function GoogleSignInButton(props, ref) {
+    
     return (
-      <IconButton
-        ref={ref}
+      <Button
+        ref={ref}        
+        color={'gray.800'}
+        type="button"
         aria-label="Sign in with Google"
-        variant="outline"
-        borderColor="gray.200"
-        bg="white"
-        _hover={{ bg: "gray.50" }}
-        _active={{ bg: "gray.100" }}
-        _icon={{ fontSize: "1.5rem" }}
+        variant="solid"                
+        gap="2"               
         {...props}
       >
-        <FcGoogle />
-        <span className="text-gray-900">Sign In with Google</span>
-      </IconButton>
+        <FcGoogle size="1.5rem"/>
+        Sign In with Google
+      </Button>
     );
   },
 );

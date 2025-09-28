@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, MouseEvent } from "react";
 import { Heading, Button, Input, Link } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthContext";
@@ -8,17 +8,22 @@ import { useLoading } from "../providers/LoadingProvider";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 const Page = () => {
-  const { signInUser, signInWithGoogle, session, loading: authLoading } = useAuth();
+  const {
+    signInUser,
+    signInWithGoogle,
+    session,
+    loading: authLoading,
+  } = useAuth();
 
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  /* const [error, setError] = useState<string | null>(null); */
+  const [googleLoading, setGoogleLoading] = useState(false);
   const { setLoading: pageLoading } = useLoading();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent page refresh
     setLoading(true);
 
@@ -27,7 +32,6 @@ const Page = () => {
     setLoading(false);
 
     if (signInError) {
-      /* setError(signInError); */
       return;
     }
     if (success) {
@@ -35,19 +39,18 @@ const Page = () => {
     }
   };
 
-  const handleGoogleSignIn = async (e: React.FormEvent) => {
-        e.preventDefault();
-    const {success, error: GoogleSignInError} = await signInWithGoogle();
-
-    if (GoogleSignInError) {
-      /* setError(signInError); */
-      return;
-    }
-    if (success) {
-      router.push("/Dashboard"); // redirect after login
-    }
+  const handleGoogleSignIn = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setGoogleLoading(true);
     
-  }
+
+    const { error: googleSignInError } = await signInWithGoogle();
+
+    if (googleSignInError) {
+      setGoogleLoading(false);
+      
+    }
+  };
 
   // If already logged in, skip sign in page
   useEffect(() => {
@@ -90,10 +93,10 @@ const Page = () => {
           >
             Sign In
           </Button>
-          
-          <GoogleSignInButton onClick={handleGoogleSignIn} />
+          <GoogleSignInButton onClick={handleGoogleSignIn} loading={googleLoading} />
         </div>
       </form>
+
       <div className="flex gap-2 text-gray-400">
         <p>{"Don't have an account?"}</p>
         <Link
@@ -112,3 +115,4 @@ const Page = () => {
 };
 
 export default Page;
+
