@@ -196,7 +196,7 @@ const Page = () => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-full !mt-10">
       <Toaster />
       <div className="w-full h-64 flex flex-col items-center justify-evenly !mt-10 gap-4">
         <Avatar.Root className="relative w-90" size={"2xl"}>

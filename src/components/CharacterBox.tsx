@@ -8,7 +8,7 @@ interface characterBoxProps {
 
 const CharacterBox = ({character, romaji}:characterBoxProps) => {
   return (
-    <div className='w-[56px] h-[56px] !p-1 flex flex-col items-center 
+    <div className='w-[54px] h-[54px] !p-1 flex flex-col items-center 
          justify-evenly !border-2 !border-cyan-700 rounded-xl
          cursor-pointer hover:!border-cyan-600'
          >

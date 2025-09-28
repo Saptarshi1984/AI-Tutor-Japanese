@@ -24,9 +24,9 @@ const Page = () => {
   if (!session) return null; // hide content until redirect
 
   return (
-    <div className="flex flex-col items-center gap-8 !mt-10">
-      <Heading>Lessons</Heading>
-      <div className="w-98 flex flex-col gap-6 !m-auto">
+    <div className="flex flex-col gap-8 !mt-20">
+      <Heading className="!ml-6">Lessons</Heading>
+      <div className="w-92 flex flex-col gap-6 !m-auto">
         <Heading>{"Beginner's Basics"}</Heading>
 
         <div

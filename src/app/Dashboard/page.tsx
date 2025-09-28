@@ -22,8 +22,8 @@ const Page = () => {
   if (!session) return null; // hide content until redirect
 
   return (
-    <div className="w-full !mt-20">
-      <Heading className="w-96 !ml-6 !mb-2">Quick Access</Heading>
+    <div className="w-full flex flex-col !mt-20">
+      <Heading className="!mb-4 !ml-6">Quick Access</Heading>
       <div className="flex flex-col gap-6">
         <LessonCard
           url={"/JapLevelTest"}

@@ -14,7 +14,7 @@ const JapaneseCharacters = () => {
   const katakanas = getKatakana();
 
   return (
-    <div className="flex items-center !mx-auto  w-full !mt-10">
+    <div className="flex items-center !mx-auto w-full !mt-14">
       <Tabs.Root
         className="w-full items-center"
         value={value}
@@ -29,7 +29,7 @@ const JapaneseCharacters = () => {
           value="first"
           className="flex overflow-y-scroll scrollbar-slick max-h-[100vh] p-4"
         >
-          <SimpleGrid columns={[2, 3, 5]} gap={"4"} m={"auto"}>
+          <SimpleGrid columns={[5]} gap={"4"} m={"auto"} >
             {hiraganas.map((char: characterType) => (
               <CharacterBox key={char.character} character={char.character} romaji={char.romaji} />
             ))}
@@ -39,7 +39,7 @@ const JapaneseCharacters = () => {
           value="second"
           className="flex overflow-y-scroll scrollbar-slick max-h-[100vh] p-4"
         >
-          <SimpleGrid columns={[2, 3, 5]} gap={"4"} m={"auto"}>
+          <SimpleGrid columns={[5]} gap={"4"} m={"auto"}>
             {katakanas.map((char: characterType) => (
               <CharacterBox key={char.character} character={char.character} romaji={char.romaji} />
             ))}

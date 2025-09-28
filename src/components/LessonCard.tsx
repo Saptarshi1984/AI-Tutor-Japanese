@@ -20,7 +20,7 @@ const LessonCard = ({
   const route = useRouter();
 
   return (
-    <div className="w-98 !m-auto">
+    <div className="w-90 !m-auto">
       <div className="!m-auto flex flex-row text-gray-300 items-center justify-between">
         <div className="flex flex-col !mt-2">
           <Heading className="!text-[16px]">{header}</Heading>
