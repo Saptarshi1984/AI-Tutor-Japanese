@@ -39,7 +39,7 @@ const Page = () => {
     }
   };
 
-  const handleGoogleSignIn = async (e: MouseEvent<HTMLButtonElement>) => {
+ const handleGoogleSignIn = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setGoogleLoading(true);
     
@@ -115,4 +115,3 @@ const Page = () => {
 };
 
 export default Page;
-

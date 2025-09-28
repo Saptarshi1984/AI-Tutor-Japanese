@@ -1,19 +1,21 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { Heading, Button, Input, Link } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthContext";
 import { useLoading } from "../providers/LoadingProvider";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
+
 
 const Page = () => {
-  const { signUpUser, session, loading: authLoading } = useAuth();
+  const { signUpUser, signInWithGoogle, session, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  /* const [error, setError] = useState<string | null>(null); */
+  const [loading, setLoading] = useState(false);  
   const {setLoading:pageLoading} = useLoading();
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // prevent page refresh
@@ -40,6 +42,19 @@ const Page = () => {
       router.push("/Dashboard");
     }
   }, [session, authLoading, router]);
+
+  const handleGoogleSignUp = async (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setGoogleLoading(true);
+      
+  
+      const { error: googleSignInError } = await signInWithGoogle();
+  
+      if (googleSignInError) {
+        setGoogleLoading(false);
+        
+      }
+    };
   
 
   return (
@@ -70,9 +85,7 @@ const Page = () => {
           <Button type="submit" loading={loading} variant={"solid"} colorPalette={"teal"}>
             Sign Up
           </Button>
-           <Button  variant={"solid"}>
-          Sign Up with Gmail
-        </Button>
+           <GoogleSignInButton onClick={handleGoogleSignUp} btnLabel="Sign up with google" loading={googleLoading} />
         </div>        
       </form>
       <div className="flex gap-2 text-gray-400">
