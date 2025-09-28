@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         setSession(data.session);
         setLoading(false);
       } catch (error) {
-        /* console.error("Error getting session:", error); */
+        console.error("Error getting session:", error);
       }
     }
 
@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         password: password,
       });
       if (error) {
-        /* console.error("Supabase sign-in error:", error.message); */
+        console.error("Supabase sign-in error:", error.message);
         return { success: false, error: error.message };
       }
       // success
@@ -157,7 +157,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         return { success: false, error: error.message };
       }
       // success
-      console.log("Supabase sign-up success:", data);
+      /* console.log("Supabase sign-up success:", data); */
       return { success: true, data };
     } catch (error) {
       // Unexpected error
