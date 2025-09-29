@@ -59,7 +59,7 @@ const Page = () => {
 
   return (
     <div      
-      className="relative max-h-[834px] !mt-6 flex flex-col items-center"
+      className="relative max-h-[834px] !mt-10 flex flex-col items-center"
     >
       <Heading>Japanese Level Test</Heading>
       <Heading>(MCQ - 20)</Heading>
