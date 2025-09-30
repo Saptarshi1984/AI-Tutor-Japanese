@@ -16,7 +16,7 @@ export default function Home() {
   }, [session, loading, route]);
 
   return (
-    <main className="relative w-[412px] h-[915px]">
+    <main className="relative w-[412px] min-h-[830px] max-h-[930px]">
       <HomePage />
            
     </main>

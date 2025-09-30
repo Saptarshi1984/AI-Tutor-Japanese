@@ -27,9 +27,9 @@ const JapaneseCharacters = () => {
 
         <Tabs.Content
           value="first"
-          className="flex overflow-y-scroll scrollbar-slick max-h-[100vh] p-4"
+          className="flex overflow-y-scroll scrollbar-slick max-h-[100vh] p-4 "
         >
-          <SimpleGrid columns={[5]} gap={"4"} m={"auto"} >
+          <SimpleGrid columns={[5]} gap={"4"} m={"auto"}>
             {hiraganas.map((char: characterType) => (
               <CharacterBox key={char.character} character={char.character} romaji={char.romaji} />
             ))}

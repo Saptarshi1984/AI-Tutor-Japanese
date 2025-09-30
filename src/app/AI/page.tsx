@@ -53,7 +53,7 @@ const Page = () => {
   };
 
   return (
-    <div className="w-[400px] h-[900px] flex flex-col gap-8 items-center justify-center !mx-auto overflow-scroll">
+    <div className="w-[400px] max-h-[800px] flex flex-col gap-8 items-center justify-center !m-auto">
       <Heading className="max-w-80 max-h-10 !text-4xl text-center">
         <span className="text-red-700">totemo</span>Japan
       </Heading>
