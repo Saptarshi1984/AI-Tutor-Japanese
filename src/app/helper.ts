@@ -1,8 +1,7 @@
 import { openai, supabase } from "@/app/config";
-import { useAuth } from "./providers/AuthContext";
 import type { ChatCompletionCreateParams } from "openai/resources/chat/completions";
 
-const { session } = useAuth();
+
 
 export async function main(query: string) {
   const queryEmbedding = await getEmbeddings(query);
