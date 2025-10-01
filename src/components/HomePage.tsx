@@ -20,7 +20,7 @@ const HomePage = () => {
  
 
   return (
-    <div className="md:!mt-40">
+    
     <div className="w-[90%] h-full flex flex-col items-center !m-auto gap-8">
       <Heading size={"2xl"}>
         <span className="!text-red-700">totemo</span>Japan
@@ -51,7 +51,7 @@ const HomePage = () => {
         Lets Get Started
       </Button>
     </div>
-    </div>
+    
   );
 };
 
