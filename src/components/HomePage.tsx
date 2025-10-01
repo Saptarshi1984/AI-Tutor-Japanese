@@ -20,7 +20,8 @@ const HomePage = () => {
  
 
   return (
-    <div className="w-[90%] h-full flex flex-col items-center justify-evenly !m-auto gap-4">
+    <div className="md:!mt-40">
+    <div className="w-[90%] h-full flex flex-col items-center !m-auto gap-8">
       <Heading size={"2xl"}>
         <span className="!text-red-700">totemo</span>Japan
       </Heading>
@@ -30,8 +31,8 @@ const HomePage = () => {
       <Image
         className="rounded-xl"
         src="/linguaImage.png"
-        width={340}
-        height={340}
+        width={300}
+        height={300}
         alt="heroImage"
       />
       <p className="w-[90%] hyphens-auto !text-[13px] !font-bold text-cyan-600">
@@ -49,6 +50,7 @@ const HomePage = () => {
       >
         Lets Get Started
       </Button>
+    </div>
     </div>
   );
 };
