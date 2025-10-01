@@ -34,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-950 text-white`}
       >
-        <div className="flex min-h-svh w-full items-center justify-center px-4 py-6 lg:px-8">
+        <div className="flex  w-full items-center justify-center px-4 py-6 lg:px-8">
           <Provider>
             <AuthContextProvider>
               <LoadingProvider>

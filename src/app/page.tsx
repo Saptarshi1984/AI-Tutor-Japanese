@@ -16,7 +16,7 @@ export default function Home() {
   }, [session, loading, route]);
 
   return (
-    <main className="relative ">
+    <main className="relative">
       <HomePage />
            
     </main>
