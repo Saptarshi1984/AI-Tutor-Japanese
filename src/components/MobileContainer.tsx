@@ -16,7 +16,8 @@ const MobileContainer = ({ children }: { children: React.ReactNode }) => {
       className="relative mx-auto flex w-full 
       max-w-[26rem] flex-col min-h-[830px] h-screen overflow-hidden 
       bg-gray-950 shadow-xl md:!border md:!border-gray-700
-      lg:max-h-[930px] lg:top-50
+      sm:h-screen
+      md:max-h-[930px] md:top-50
       "
       /* style={{ height: "min(930px, 100svh)", minHeight: "min(830px, 100svh)" }} */
     >
